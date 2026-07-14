@@ -3,10 +3,12 @@ import React from 'react';
 const sections = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'journey', label: 'Journey' },
+  { id: 'education', label: 'Education' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
-  { id: 'certifications', label: 'Certifications' },
-  { id: 'experience', label: 'Experience' },
+  { id: 'hackathons', label: 'Hackathons' },
+  { id: 'dashboard', label: 'Dashboard' },
   { id: 'contact', label: 'Contact' }
 ];
 
@@ -31,7 +33,7 @@ export default function FloatingNav({ activeSection }) {
         >
           {/* Visual Dot */}
           <div
-            className={`floating-nav-dot ${activeSection === sect.id ? 'active' : ''}`}
+            className={`floating-nav-dot ${activeSection === sect.id ? 'active animate-glow' : ''}`}
           />
           <span className="floating-nav-tooltip">{sect.label}</span>
         </a>

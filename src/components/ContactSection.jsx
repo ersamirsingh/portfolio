@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { portfolioData } from '../data/portfolioData';
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -8,6 +9,16 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    const mailtoSubject = encodeURIComponent(form.subject || `Portfolio Inquiry from ${form.name}`);
+    const mailtoBody = encodeURIComponent(
+      `Name: ${form.name}\n` +
+      `Email: ${form.email}\n\n` +
+      `Message:\n${form.message}`
+    );
+    
+    window.location.href = `mailto:${portfolioData.personalInfo.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+    
     setSent(true);
     setTimeout(() => setSent(false), 3000);
     setForm({ name: '', email: '', subject: '', message: '' });
@@ -51,11 +62,11 @@ export default function ContactSection() {
               For serious inquiries, technical discussions, or consulting opportunities. Response time is typically within 24 hours on business days.
             </p>
 
-            <a
-              href="mailto:samir@example.com"
+             <a
+              href={`mailto:${portfolioData.personalInfo.email}`}
               className="text-primary hover:text-primary-fixed font-mono text-sm flex items-center gap-2 group transition-colors"
             >
-              samir.singh@email.com
+              {portfolioData.personalInfo.email}
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -66,17 +77,17 @@ export default function ContactSection() {
                 {
                   icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />,
                   label: 'GitHub',
-                  href: '#',
+                  href: portfolioData.personalInfo.github,
                 },
                 {
                   icon: <><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" strokeWidth={1.5} /></>,
                   label: 'LinkedIn',
-                  href: '#',
+                  href: portfolioData.personalInfo.linkedin,
                 },
                 {
-                  icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />,
-                  label: 'Twitter / X',
-                  href: '#',
+                  icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5l2 2h5a2 2 0 012 2v12a2 2 0 01-2 2z" />,
+                  label: 'Codolio',
+                  href: portfolioData.personalInfo.codolio,
                 },
               ].map((link) => (
                 <a

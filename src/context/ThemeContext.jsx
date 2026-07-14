@@ -4,43 +4,33 @@ const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {
-    return localStorage.getItem('portfolio-theme') || 'system';
+    return localStorage.getItem('portfolio-theme') || 'light';
   });
 
-  // Compute the actually applied theme ('light' | 'dark')
-  const [resolvedTheme, setResolvedTheme] = useState('dark');
+  const [resolvedTheme, setResolvedTheme] = useState('light');
 
   useEffect(() => {
     const applyTheme = (t) => {
       const root = document.documentElement;
-      root.classList.remove('dark', 'light');
-      if (t === 'dark') {
-        root.classList.add('dark');
+      root.classList.remove('dark', 'light', 'cyber-cosmic', 'deep-indigo');
+      
+      if (t === 'cyber-cosmic') {
+        root.classList.add('dark', 'cyber-cosmic');
+        setResolvedTheme('dark');
+      } else if (t === 'deep-indigo') {
+        root.classList.add('dark', 'deep-indigo');
         setResolvedTheme('dark');
       } else if (t === 'light') {
         root.classList.add('light');
         setResolvedTheme('light');
       } else {
-        // system
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        root.classList.add(prefersDark ? 'dark' : 'light');
-        setResolvedTheme(prefersDark ? 'dark' : 'light');
+        // Fallback for system / legacy dark setting
+        root.classList.add('dark', 'cyber-cosmic');
+        setResolvedTheme('dark');
       }
     };
 
     applyTheme(theme);
-
-    // Watch system preference changes when in 'system' mode
-    if (theme === 'system') {
-      const mq = window.matchMedia('(prefers-color-scheme: dark)');
-      const handler = (e) => {
-        document.documentElement.classList.remove('dark', 'light');
-        document.documentElement.classList.add(e.matches ? 'dark' : 'light');
-        setResolvedTheme(e.matches ? 'dark' : 'light');
-      };
-      mq.addEventListener('change', handler);
-      return () => mq.removeEventListener('change', handler);
-    }
   }, [theme]);
 
   const setTheme = (newTheme) => {
