@@ -1,29 +1,9 @@
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useTiltEffect } from '../hooks/useTiltEffect';
 import { FiAward, FiBookOpen, FiActivity } from 'react-icons/fi';
 
 export default function About() {
-  const cardRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // Calculate rotation angles based on mouse position relative to center
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    const angleX = (yc - y) / 12; // cap rotation
-    const angleY = (x - xc) / 12;
-
-    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
-  };
-
-  const handleMouseLeave = () => {
-    if (!cardRef.current) return;
-    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-  };
+  const { tiltStyle, handleMouseMove, handleMouseLeave } = useTiltEffect(6);
 
   const facts = [
     { emoji: '🍕', label: 'Fuelled by Margherita' },
@@ -83,12 +63,11 @@ export default function About() {
 
           {/* Right Column – Interactive 3D Tilt Card */}
           <div className="lg:col-span-5 flex justify-center">
-            <div
-              ref={cardRef}
+            <motion.div
+              style={tiltStyle}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="w-full max-w-sm glass-card p-8 text-center relative transition-all duration-200 ease-out select-none border border-theme"
-              style={{ transformStyle: 'preserve-3d' }}
+              className="w-full max-w-sm glass-card p-8 text-center relative select-none border border-theme"
             >
               {/* Inner content with 3D translation */}
               <div style={{ transform: 'translateZ(50px)' }}>
@@ -117,7 +96,7 @@ export default function About() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

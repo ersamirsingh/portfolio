@@ -3,8 +3,10 @@ import { useTheme } from '../context/ThemeContext';
 import useScrollProgress from '../hooks/useScrollProgress';
 import { FiSun, FiMoon, FiMonitor, FiMenu, FiX, FiDownload } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import Magnetic from './Magnetic';
 
-export default function Navbar({ activeSection }) {
+
+export default function Navbar({ activeSection, onResumeOpen }) {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const scrollProgress = useScrollProgress();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,8 +27,6 @@ export default function Navbar({ activeSection }) {
     { id: 'dark', label: 'Dark', icon: <FiMoon className="w-4 h-4" /> },
     { id: 'system', label: 'System', icon: <FiMonitor className="w-4 h-4" /> },
   ];
-
-  const RESUME_URL = import.meta.env.VITE_RESUME_URL
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -111,13 +111,18 @@ export default function Navbar({ activeSection }) {
           </div>
 
           {/* CV Button */}
-          <a
-            href=""
-            className="px-5 py-2 rounded-full bg-primary/10 text-primary border border-primary/30 text-xs font-mono tracking-wider hover:bg-primary/20 transition-all duration-300 glow-primary-hover flex items-center gap-2"
-          >
-            <FiDownload className="w-3.5 h-3.5" />
-            Resume
-          </a>
+          <Magnetic strength={0.2}>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onResumeOpen();
+              }}
+              className="px-5 py-2 rounded-full bg-primary/10 text-primary border border-primary/30 text-xs font-mono tracking-wider hover:bg-primary/20 transition-all duration-300 glow-primary-hover flex items-center gap-2 cursor-none"
+            >
+              <FiDownload className="w-3.5 h-3.5" />
+              Resume
+            </button>
+          </Magnetic>
         </div>
 
         {/* Mobile Control Buttons (Hamburger + Theme) */}
@@ -194,13 +199,17 @@ export default function Navbar({ activeSection }) {
 
               <div>
                 <div className="w-full h-px bg-theme border-b border-theme/5 mb-6" />
-                <a
-                  href={RESUME_URL}
-                  className="w-full py-3.5 rounded-xl bg-primary text-center text-on-primary font-bold text-sm hover:bg-primary-fixed transition-all duration-300 flex items-center justify-center gap-2 font-display"
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMobileMenuOpen(false);
+                    onResumeOpen();
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-primary text-center text-on-primary font-bold text-sm hover:bg-primary-fixed transition-all duration-300 flex items-center justify-center gap-2 font-display cursor-none"
                 >
                   <FiDownload className="w-4 h-4" />
-                  Download Resume
-                </a>
+                  Resume
+                </button>
               </div>
             </motion.div>
           </>

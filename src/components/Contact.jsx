@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { FiSend, FiMail, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
+import { FiSend, FiMail, FiGithub, FiLinkedin, FiCode } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import Magnetic from './Magnetic';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -29,7 +30,7 @@ export default function Contact() {
     { icon: <FiMail className="w-5 h-5" />, label: 'Email', value: 'samirrgpv@email.com', href: 'mailto:samirrgpv@email.com' },
     { icon: <FiGithub className="w-5 h-5" />, label: 'GitHub', value: 'github.com/ersamirsingh', href: 'https://www.github.com/ersamirsingh' },
     { icon: <FiLinkedin className="w-5 h-5" />, label: 'LinkedIn', value: 'linkedin.com/in/ersamirsingh', href: 'https://www.linkedin.com/in/ersamirsingh' },
-    { icon: <FiTwitter className="w-5 h-5" />, label: 'Twitter', value: 'codolio.com/ersamirsingh', href: 'https://www.codolio.com/ersamirsingh' },
+    { icon: <FiCode className="w-5 h-5" />, label: 'Codolio', value: 'codolio.com/profile/ersamirsingh', href: 'https://codolio.com/profile/ersamirsingh' },
   ];
 
   return (
@@ -150,20 +151,22 @@ export default function Contact() {
                     <span>Secure socket link</span>
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="px-6 py-3 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-primary-fixed disabled:opacity-50 transition-all flex items-center gap-2 cursor-none"
-                  >
-                    {isSubmitting ? (
-                      <span className="loading loading-spinner loading-xs" />
-                    ) : (
-                      <>
-                        <span>Send Message</span>
-                        <FiSend className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
+                  <Magnetic strength={0.2}>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="px-6 py-3 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-primary-fixed disabled:opacity-50 transition-all flex items-center gap-2 cursor-none"
+                    >
+                      {isSubmitting ? (
+                        <span className="loading loading-spinner loading-xs" />
+                      ) : (
+                        <>
+                          <span>Send Message</span>
+                          <FiSend className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  </Magnetic>
                 </div>
               </form>
 

@@ -12,11 +12,14 @@ import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import CustomCursor from './components/CustomCursor';
 import BackToTop from './components/BackToTop';
+import FloatingNav from './components/FloatingNav';
+import ResumeModal from './components/ResumeModal';
 import { AnimatePresence } from 'framer-motion';
 
 function MainApp() {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   useEffect(() => {
     // Intersection Observer to trace which section is in view
@@ -55,11 +58,19 @@ function MainApp() {
           <CustomCursor />
 
           {/* Navigation */}
-          <Navbar activeSection={activeSection} />
+          <Navbar activeSection={activeSection} onResumeOpen={() => setResumeOpen(true)} />
+
+          {/* Floating Navigation Dots */}
+          <FloatingNav activeSection={activeSection} />
+
+          {/* Resume Action Options Modal */}
+          <AnimatePresence>
+            {resumeOpen && <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />}
+          </AnimatePresence>
 
           {/* Core Sections */}
           <main>
-            <Hero />
+            <Hero onResumeOpen={() => setResumeOpen(true)} />
             <About />
             <Skills />
             <Projects />

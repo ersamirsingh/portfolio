@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { FiExternalLink, FiGithub, FiX } from 'react-icons/fi';
+import { useTiltEffect } from '../hooks/useTiltEffect';
+import TechChip from './TechChip';
+import Magnetic from './Magnetic';
+
 
 const projectsList = [
   {
@@ -35,23 +39,67 @@ const projectsList = [
   },
 ];
 
+function ProjectCard({ project, onClick, cardVariants }) {
+  const { tiltStyle, handleMouseMove, handleMouseLeave } = useTiltEffect(6);
+
+  return (
+    <motion.div
+      variants={cardVariants}
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={tiltStyle}
+      className="glass-card bg-theme border border-theme rounded-2xl overflow-hidden cursor-none flex flex-col h-full transition-shadow duration-300 hover:shadow-xl"
+    >
+      {/* Cover Card */}
+      <div className={`h-48 w-full bg-gradient-to-br ${project.gradient} relative flex items-center justify-center p-4 border-b border-theme`}>
+        <span className="text-white/20 font-mono font-bold text-7xl absolute left-4 bottom-2 select-none">
+          {project.id}
+        </span>
+        <span className="text-white font-display font-bold text-lg text-center tracking-wide drop-shadow-md">
+          {project.title}
+        </span>
+      </div>
+
+      {/* Body */}
+      <div className="p-6 flex flex-col justify-between flex-grow">
+        <div>
+          <p className="text-muted/90 text-xs sm:text-sm leading-relaxed mb-6 line-clamp-3">
+            {project.shortDesc}
+          </p>
+        </div>
+        <div>
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            {project.tags.slice(0, 3).map((t) => (
+              <TechChip key={t} name={t} className="text-[10px] px-2 py-0.5" />
+            ))}
+            {project.tags.length > 3 && (
+              <span className="badge-tech text-[10px] px-2 py-0.5">+{project.tags.length - 3}</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const shouldReduceMotion = useReducedMotion();
 
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    const angleX = (yc - y) / 15;
-    const angleY = (x - xc) / 15;
-    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.15,
+      },
+    },
   };
 
-  const handleMouseLeave = (e) => {
-    e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  const cardVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   return (
@@ -67,47 +115,22 @@ export default function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-100px' }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {projectsList.map((project) => (
-            <div
+            <ProjectCard
               key={project.id}
+              project={project}
+              cardVariants={cardVariants}
               onClick={() => setSelectedProject(project)}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              className="glass-card bg-theme border border-theme rounded-2xl overflow-hidden cursor-none flex flex-col h-full transition-transform duration-300 ease-out"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              {/* Cover Card */}
-              <div className={`h-48 w-full bg-gradient-to-br ${project.gradient} relative flex items-center justify-center p-4 border-b border-theme`}>
-                <span className="text-white/20 font-mono font-bold text-7xl absolute left-4 bottom-2 select-none">
-                  {project.id}
-                </span>
-                <span className="text-white font-display font-bold text-lg text-center tracking-wide drop-shadow-md">
-                  {project.title}
-                </span>
-              </div>
-
-              {/* Body */}
-              <div className="p-6 flex flex-col justify-between flex-grow">
-                <div>
-                  <p className="text-muted/90 text-xs sm:text-sm leading-relaxed mb-6 line-clamp-3">
-                    {project.shortDesc}
-                  </p>
-                </div>
-                <div>
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {project.tags.slice(0, 3).map((t) => (
-                      <span key={t} className="badge-tech">{t}</span>
-                    ))}
-                    {project.tags.length > 3 && (
-                      <span className="badge-tech">+{project.tags.length - 3}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Full Modal Overlay */}
@@ -157,27 +180,31 @@ export default function Projects() {
                   <h4 className="text-xs font-mono text-primary uppercase tracking-wider mb-3">Tech Stack</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.tags.map((t) => (
-                      <span key={t} className="badge-tech">{t}</span>
+                      <TechChip key={t} name={t} />
                     ))}
                   </div>
                 </div>
 
                 {/* Footer Actions */}
                 <div className="flex items-center gap-4 pt-4 border-t border-theme">
-                  <a
-                    href={selectedProject.liveUrl}
-                    className="flex-1 py-3 px-4 rounded-xl bg-primary text-on-primary text-center font-bold text-sm hover:bg-primary-fixed transition-all duration-300 flex items-center justify-center gap-2 cursor-none"
-                  >
-                    <FiExternalLink className="w-4 h-4" />
-                    See Live
-                  </a>
-                  <a
-                    href={selectedProject.codeUrl}
-                    className="flex-1 py-3 px-4 rounded-xl border border-theme bg-theme text-body text-center font-semibold text-sm hover:bg-theme-surface transition-all duration-300 flex items-center justify-center gap-2 cursor-none"
-                  >
-                    <FiGithub className="w-4 h-4" />
-                    Check Code
-                  </a>
+                  <Magnetic strength={0.2} className="flex-1">
+                    <a
+                      href={selectedProject.liveUrl}
+                      className="w-full py-3 px-4 rounded-xl bg-primary text-on-primary text-center font-bold text-sm hover:bg-primary-fixed transition-all duration-300 flex items-center justify-center gap-2 cursor-none"
+                    >
+                      <FiExternalLink className="w-4 h-4" />
+                      See Live
+                    </a>
+                  </Magnetic>
+                  <Magnetic strength={0.2} className="flex-1">
+                    <a
+                      href={selectedProject.codeUrl}
+                      className="w-full py-3 px-4 rounded-xl border border-theme bg-theme text-body text-center font-semibold text-sm hover:bg-theme-surface transition-all duration-300 flex items-center justify-center gap-2 cursor-none"
+                    >
+                      <FiGithub className="w-4 h-4" />
+                      Check Code
+                    </a>
+                  </Magnetic>
                 </div>
               </div>
             </motion.div>

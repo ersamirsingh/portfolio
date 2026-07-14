@@ -1,4 +1,4 @@
-import { FiGithub, FiLinkedin, FiTwitter, FiMail } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiCode, FiMail } from 'react-icons/fi';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -22,10 +22,10 @@ export default function Footer() {
         {/* Right social list */}
         <div className="flex items-center gap-4">
           {[
-            { icon: <FiMail className="w-4 h-4" />, label: 'Email', href: 'mailto:samir.singh@email.com' },
-            { icon: <FiGithub className="w-4 h-4" />, label: 'GitHub', href: '#' },
-            { icon: <FiLinkedin className="w-4 h-4" />, label: 'LinkedIn', href: '#' },
-            { icon: <FiTwitter className="w-4 h-4" />, label: 'Twitter', href: '#' },
+            { icon: <FiMail className="w-4 h-4" />, label: 'Email', href: 'mailto:samirrgpv@email.com' },
+            { icon: <FiGithub className="w-4 h-4" />, label: 'GitHub', href: 'https://www.github.com/ersamirsingh' },
+            { icon: <FiLinkedin className="w-4 h-4" />, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ersamirsingh' },
+            { icon: <FiCode className="w-4 h-4" />, label: 'Codolio', href: 'https://codolio.com/profile/ersamirsingh' },
           ].map((link, idx) => (
             <a
               key={idx}

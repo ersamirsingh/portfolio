@@ -1,54 +1,50 @@
-import { motion } from 'framer-motion';
-import { FiBriefcase } from 'react-icons/fi';
+import { motion, useReducedMotion } from 'framer-motion';
+import TechChip from './TechChip';
+import { FiExternalLink } from 'react-icons/fi';
 
 const experiences = [
   {
-    role: 'Software Engineer',
-    company: 'Tech Innovations Inc.',
-    duration: '2023 – Present',
+    role: 'R&D Engineering Intern',
+    company: 'IEEE',
+    duration: "Jun 2025 – Jul 2025",
     bullets: [
-      'Architected microservice integrations in FastAPI and PostgreSQL backend environments.',
-      'Reduced system bottlenecks and queries to achieve a 40% response latency reduction.',
-      'Mentored juniors and hosted regular RFC engineering design reviews.',
+      'Authored research findings and analysed IEEE publications, contributing to technical standardization studies.',
+      'Implemented performance-critical backend algorithms and compiled benchmarking reports for high-performance networks.',
+      'Coordinated with local chapter engineers to support technical webinars and research workshops.',
     ],
-    tags: ['FastAPI', 'PostgreSQL', 'Docker', 'AWS'],
+    tags: ['Linux Shell', 'Python', 'Git & GitHub', 'AWS'],
+    verifyUrl: 'https://drive.google.com/file/d/1gjptHGkEgrY0Ko8GsOLXkpIuYEmx5Yz1/view?usp=drive_link',
   },
   {
-    role: 'Freelance Full-Stack Developer',
-    company: 'Independent Contractor',
-    duration: '2022 – 2023',
+    role: 'Full-Stack Developer Intern',
+    company: 'EduTech (Virtual)',
+    duration: "Apr 2025 – Jun 2025",
     bullets: [
-      'Shipped robust full-stack platforms for five international enterprise clients.',
-      'Designed dynamic glassmorphic frontend layers integrating Stripe billing gateways.',
+      'Designed and developed modular full-stack educational dashboard portals using the MERN stack.',
+      'Integrated RESTful backend API layers in Node.js and scaled MongoDB enrollment schemas.',
+      'Styled clean, responsive frontend layouts using Tailwind CSS and React.',
     ],
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-  },
-  {
-    role: 'Backend Engineering Intern',
-    company: 'StartUp Labs',
-    duration: 'Summer 2021',
-    bullets: [
-      'Authored RESTful services and implemented unit testing achieving 90% codebase coverage.',
-      'Assisted in data migration from legacy MySQL monolith platforms to modular systems.',
-    ],
-    tags: ['Node.js', 'Express', 'Jest', 'MySQL'],
+    tags: ['React', 'Node.js', 'MongoDB', 'TailwindCSS', 'Express'],
+    verifyUrl: 'https://drive.google.com/file/d/1JJCxPZ8uFSH9hm2DYu_CrOU1hwLUl0rK/view?usp=drive_link',
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
-
 export default function Experience() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.2 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  };
+
   return (
     <section id="experience" className="py-24 relative overflow-hidden bg-theme-surface">
       <div className="max-w-4xl mx-auto px-6 relative z-10">
@@ -94,9 +90,22 @@ export default function Experience() {
                       <h3 className="font-display font-bold text-lg text-body">
                         {exp.role}
                       </h3>
-                      <p className="text-sm text-primary font-semibold font-mono">
-                        {exp.company}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm text-primary font-semibold font-mono">
+                          {exp.company}
+                        </p>
+                        {exp.verifyUrl && (
+                          <a
+                            href={exp.verifyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] font-mono text-muted bg-theme hover:text-primary hover:bg-primary/10 border border-theme px-2 py-0.5 rounded transition-all flex items-center gap-1 cursor-none"
+                          >
+                            Verify Certificate
+                            <FiExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        )}
+                      </div>
                     </div>
                     <span className="text-xs font-mono text-muted bg-theme-surface border border-theme px-3 py-1.5 rounded-full flex-shrink-0 self-start">
                       {exp.duration}
@@ -111,7 +120,7 @@ export default function Experience() {
 
                   <div className="flex flex-wrap gap-1.5">
                     {exp.tags.map((tag) => (
-                      <span key={tag} className="badge-tech">{tag}</span>
+                      <TechChip key={tag} name={tag} />
                     ))}
                   </div>
                 </div>

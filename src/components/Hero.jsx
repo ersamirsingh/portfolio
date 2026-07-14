@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { FiArrowDown, FiDownload, FiArrowRight } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import Magnetic from './Magnetic';
 
-export default function Hero() {
+export default function Hero({ onResumeOpen }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const typewriterRef = useRef(null);
@@ -250,20 +252,22 @@ export default function Hero() {
     };
   }, []);
 
-  // Magnetic Button Effect
-  const handleMagneticMove = (e) => {
-    const btn = e.currentTarget;
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-
-    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
   };
 
-  const handleMagneticLeave = (e) => {
-    const btn = e.currentTarget;
-    btn.style.transform = 'translate(0px, 0px)';
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
+
 
   return (
     <section
@@ -280,56 +284,76 @@ export default function Hero() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 w-full z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="max-w-xl text-left select-none">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="max-w-xl text-left select-none"
+        >
           {/* Status Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/10 backdrop-blur-md mb-8">
+          <motion.div
+            variants={itemVariants}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/10 backdrop-blur-md mb-8"
+          >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-mono text-xs text-primary tracking-widest uppercase">Systems Active</span>
-          </div>
+          </motion.div>
 
           {/* Heading */}
-          <h1 className="font-display font-extrabold text-4xl sm:text-6xl text-body mb-4 tracking-tight leading-tight">
+          <motion.h1
+            variants={itemVariants}
+            className="font-display font-extrabold text-4xl sm:text-6xl text-body mb-4 tracking-tight leading-tight"
+          >
             Hi, I'm <br />
             <span className="text-gradient-primary">Samir Singh</span>
-          </h1>
+          </motion.h1>
 
           {/* Typewriter subtitle */}
-          <div className="h-8 mb-8 flex items-center border-l-2 border-primary/50 pl-4">
+          <motion.div
+            variants={itemVariants}
+            className="h-8 mb-8 flex items-center border-l-2 border-primary/50 pl-4"
+          >
             <span
               ref={typewriterRef}
               className="text-lg md:text-xl text-muted font-mono typewriter-cursor font-medium"
             >
               {typedText}
             </span>
-          </div>
+          </motion.div>
 
-          <p className="text-muted/80 text-sm sm:text-base leading-relaxed mb-10 max-w-lg">
+          <motion.p
+            variants={itemVariants}
+            className="text-muted/80 text-sm sm:text-base leading-relaxed mb-10 max-w-lg"
+          >
             Engineering robust, highly scalable production web platforms. Bridging complex backend logic
             with interactive 3D elements and modern clean design interfaces.
-          </p>
+          </motion.p>
 
           {/* Magnetic CTA Buttons */}
-          <div className="flex flex-wrap gap-4 items-center">
-            <a
-              href="#projects"
-              onMouseMove={handleMagneticMove}
-              onMouseLeave={handleMagneticLeave}
-              className="px-8 py-3.5 rounded-full bg-primary text-on-primary font-bold text-sm hover:bg-primary-fixed transition-all duration-300 glow-primary-hover flex items-center gap-2 font-display cursor-none"
-            >
-              View Work
-              <FiArrowRight className="w-4 h-4" />
-            </a>
-            <a
-              href="#"
-              onMouseMove={handleMagneticMove}
-              onMouseLeave={handleMagneticLeave}
-              className="px-6 py-3.5 rounded-full border border-outline-variant bg-theme-surface/30 backdrop-blur-sm text-body text-sm font-medium hover:bg-theme-surface hover:border-outline transition-all duration-300 flex items-center gap-2 cursor-none"
-            >
-              <FiDownload className="w-4 h-4" />
-              Get Resume
-            </a>
-          </div>
-        </div>
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-4 items-center">
+            <Magnetic strength={0.25}>
+              <a
+                href="#projects"
+                className="px-8 py-3.5 rounded-full bg-primary text-on-primary font-bold text-sm hover:bg-primary-fixed transition-all duration-300 glow-primary-hover flex items-center gap-2 font-display cursor-none"
+              >
+                View Work
+                <FiArrowRight className="w-4 h-4" />
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.25}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onResumeOpen();
+                }}
+                className="px-6 py-3.5 rounded-full border border-outline-variant bg-theme-surface/30 backdrop-blur-sm text-body text-sm font-medium hover:bg-theme-surface hover:border-outline transition-all duration-300 flex items-center gap-2 cursor-none"
+              >
+                <FiDownload className="w-4 h-4" />
+                Get Resume
+              </button>
+            </Magnetic>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Scroll Down Indicator */}
