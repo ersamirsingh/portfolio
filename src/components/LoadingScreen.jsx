@@ -8,8 +8,8 @@ export default function LoadingScreen({ onComplete }) {
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
-      setText((prev) => prev + fullText[index]);
       index++;
+      setText(fullText.slice(0, index));
       if (index >= fullText.length) {
         clearInterval(interval);
         setTimeout(() => {

@@ -35,38 +35,36 @@ export default function AboutSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="relative p-[1px] rounded-3xl bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0f0f0f] shadow-[0_0_50px_rgba(120,140,255,0.08)]"
+              className="glass-card rounded-3xl p-8 flex flex-col items-center text-center overflow-hidden relative"
             >
-              <div className="glass-card bg-gradient-to-br from-[#ffffff]/90 to-[#f1f5f9]/90 dark:from-[#0d0e1d] dark:to-[#030409] border border-primary/20 dark:border-primary/30 rounded-[22px] p-8 flex flex-col items-center text-center overflow-hidden relative">
-                {/* Decorative glow */}
-                <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
+              {/* Decorative glow */}
+              <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl" />
 
-                {/* Profile Placeholder Image / High Tech SVG Avatar */}
-                <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-4xl font-extrabold mb-6 shadow-xl relative overflow-hidden">
-                  <span className="relative z-10">SS</span>
-                  {/* Digital circuit look overlay */}
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-65" />
+              {/* Profile Placeholder Image / High Tech SVG Avatar */}
+              <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-4xl font-extrabold mb-6 shadow-xl relative overflow-hidden">
+                <span className="relative z-10">SS</span>
+                {/* Digital circuit look overlay */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-65" />
+              </div>
+
+              <h3 className="font-display font-extrabold text-2xl text-body mb-1">{name}</h3>
+              <p className="text-accent font-mono text-xs mb-4">{title}</p>
+              
+              <p className="text-muted text-sm leading-relaxed mb-6">
+                "Writing modular, highly performance-oriented code that bridges real-world business needs with excellent visual feedback."
+              </p>
+
+              <div className="w-full h-px bg-theme/50 mb-6" />
+
+              {/* Micro Stats inside about */}
+              <div className="grid grid-cols-2 gap-4 w-full">
+                <div className="text-left">
+                  <span className="text-[10px] uppercase font-mono text-muted">Specialty</span>
+                  <span className="block text-sm font-bold text-body">MERN / API</span>
                 </div>
-
-                <h3 className="font-display font-extrabold text-2xl text-body mb-1">{name}</h3>
-                <p className="text-accent font-mono text-xs mb-4">{title}</p>
-                
-                <p className="text-muted text-sm leading-relaxed mb-6">
-                  "Writing modular, highly performance-oriented code that bridges real-world business needs with excellent visual feedback."
-                </p>
-
-                <div className="w-full h-px bg-theme/50 mb-6" />
-
-                {/* Micro Stats inside about */}
-                <div className="grid grid-cols-2 gap-4 w-full">
-                  <div className="text-left">
-                    <span className="text-[10px] uppercase font-mono text-muted">Specialty</span>
-                    <span className="block text-sm font-bold text-body">MERN / API</span>
-                  </div>
-                  <div className="text-left">
-                    <span className="text-[10px] uppercase font-mono text-muted">Core Focus</span>
-                    <span className="block text-sm font-bold text-body">Scale & Speed</span>
-                  </div>
+                <div className="text-left">
+                  <span className="text-[10px] uppercase font-mono text-muted">Core Focus</span>
+                  <span className="block text-sm font-bold text-body">Scale & Speed</span>
                 </div>
               </div>
             </motion.div>
@@ -100,13 +98,13 @@ export default function AboutSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="p-8 rounded-3xl bg-theme-card border border-theme"
+              className="p-8 rounded-3xl glass-card"
             >
               <h3 className="font-display font-extrabold text-2xl text-body mb-4">My Story</h3>
               <p className="text-muted text-base leading-relaxed mb-6">
                 {bio}
               </p>
-              <div className="p-4 rounded-xl border border-theme/60 bg-theme-surface/50">
+              <div className="p-4 rounded-xl bg-white/5">
                 <span className="font-mono text-xs text-accent font-semibold block mb-1">Career Goal</span>
                 <p className="text-sm text-body">{careerGoal}</p>
               </div>
@@ -114,7 +112,7 @@ export default function AboutSection() {
 
             {/* Mission & Vision */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <TiltCard className="p-8 rounded-3xl bg-theme-card border border-theme flex flex-col justify-between h-full">
+              <TiltCard className="p-8 rounded-3xl glass-card flex flex-col justify-between h-full">
                 <div>
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-xl mb-4 font-bold">🎯</div>
                   <h4 className="font-display font-bold text-lg text-body mb-2">My Mission</h4>
@@ -122,7 +120,7 @@ export default function AboutSection() {
                 </div>
               </TiltCard>
 
-              <TiltCard className="p-8 rounded-3xl bg-theme-card border border-theme flex flex-col justify-between h-full">
+              <TiltCard className="p-8 rounded-3xl glass-card flex flex-col justify-between h-full">
                 <div>
                   <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary text-xl mb-4 font-bold">👁️</div>
                   <h4 className="font-display font-bold text-lg text-body mb-2">My Vision</h4>
@@ -143,7 +141,7 @@ export default function AboutSection() {
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={cardVariants}
-                    className="p-5 rounded-2xl bg-theme-card border border-theme hover:border-accent/30 transition-all"
+                    className="p-5 rounded-2xl glass-card hover:bg-white/10 transition-all"
                   >
                     <h5 className="font-display font-bold text-sm text-body mb-1.5 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-accent" />

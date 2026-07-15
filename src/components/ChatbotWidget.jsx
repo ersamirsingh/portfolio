@@ -44,7 +44,7 @@ export default function ChatbotWidget() {
       return `Samir specializes in JavaScript, TypeScript, React, Node.js, Express, MongoDB, and Redis. He also builds agentic AI pipelines using RAG, LangGraph, and the Gemini API.`;
     }
     if (q.includes('education') || q.includes('college') || q.includes('ies') || q.includes('gpa')) {
-      return `Samir is studying B.Tech in CSE at IES College of Technology, maintaining an 8.39 CGPA. He was the academic Branch Topper in Semesters 3 (8.59 GPA) and 5 (9.29 GPA).`;
+      return `Samir is studying B.Tech in CSE at IES College of Technology, Bhopal, maintaining an 8.39 CGPA. He was the academic Branch Topper in Semesters 3 (8.59 GPA) and 5 (9.29 GPA).`;
     }
     if (q.includes('experience') || q.includes('job') || q.includes('intern')) {
       return `Samir has 1 year of experience as the Founder of OmniServe, a developer of agritech systems, and as a Virtual Full Stack Intern at eduTech.`;
@@ -111,7 +111,7 @@ export default function ChatbotWidget() {
             {/* Header */}
             <div className="bg-theme-surface p-4 border-b border-theme flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <span className="w-3 h-3 rounded-full bg-success animate-pulse" />
+                <span className="w-3 h-3 rounded-full bg-purple-400 animate-pulse" />
                 <div>
                   <h4 className="font-display font-bold text-sm text-body">Samir's AI Agent</h4>
                   <span className="text-[9px] font-mono text-muted uppercase">Online • RAG Indexer</span>

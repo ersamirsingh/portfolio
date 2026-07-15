@@ -21,6 +21,9 @@ export default function Navbar({ activeSection, onResumeOpen }) {
     { label: 'Skills', href: '#skills', id: 'skills' },
     { label: 'Projects', href: '#projects', id: 'projects' },
     { label: 'Hackathons', href: '#hackathons', id: 'hackathons' },
+    { label: 'Certifications', href: '#certifications', id: 'certifications' },
+    { label: 'Achievements', href: '#achievements', id: 'achievements' },
+    { label: 'Gallery', href: '#gallery', id: 'gallery' },
     { label: 'Dashboard', href: '#dashboard', id: 'dashboard' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];

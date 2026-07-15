@@ -20,7 +20,7 @@ export const portfolioData = {
     github: import.meta.env.VITE_GITHUB_URL || "https://github.com/ersamirsingh",
     linkedin: import.meta.env.VITE_LINKEDIN_URL || "https://linkedin.com/in/ersamirsingh",
     codolio: import.meta.env.VITE_CODOLIO_URL || "https://www.codolio.com/profile/ersamirsingh",
-    location: "New Delhi, India",
+    location: "Bhopal, India",
     availability: "Available for Full-Time Roles & Project Consultation",
     resumeUrl: import.meta.env.VITE_RESUME_URL || "#", // Handled by Resume Modal
   },
@@ -45,7 +45,7 @@ export const portfolioData = {
     ],
     highlights: [
       "Founder & Architect of OmniServe (B2B QR hospitality order platform)",
-      "Academic Branch Topper at IES College of Technology",
+      "Academic Branch Topper at IES College of Technology, Bhopal",
       "National Hackathon Finalist (IIT Jammu, NIT Delhi)"
     ]
   },
@@ -81,7 +81,7 @@ export const portfolioData = {
     degrees: [
       {
         degree: "Bachelor of Technology in Computer Science & Engineering",
-        institution: "IES College of Technology",
+        institution: "IES College of Technology, Bhopal",
         period: "2023 - 2027",
         grade: "8.39 CGPA",
         coursework: ["Data Structures & Algorithms", "Database Systems", "Operating Systems", "Cloud Computing", "AI & Machine Learning", "Distributed Networks"],
@@ -116,12 +116,12 @@ export const portfolioData = {
   skills: {
     frontend: [
       { name: "React.js", level: 93, exp: "2.5 yrs", projects: ["OmniServe", "WorkLink"] },
-      { name: "TypeScript", level: 88, exp: "2 yrs", projects: ["OmniServe Backend", "CineGraph RAG"] },
       { name: "Tailwind CSS", level: 95, exp: "3 yrs", projects: ["All Web Interfaces"] },
       { name: "Redux Toolkit", level: 85, exp: "1.5 yrs", projects: ["eduTech Student Portal"] },
       { name: "Framer Motion", level: 90, exp: "1.5 yrs", projects: ["Interactive Portfolio", "Landing Pages"] }
     ],
     backend: [
+      { name: "TypeScript", level: 88, exp: "2 yrs", projects: ["OmniServe Backend", "CineGraph RAG"] },
       { name: "Node.js", level: 92, exp: "2.5 yrs", projects: ["OmniServe API", "WorkLink Gateway"] },
       { name: "Express.js", level: 94, exp: "2.5 yrs", projects: ["REST APIs", "Microservices Gateway"] },
       { name: "FastAPI", level: 80, exp: "1 yr", projects: ["AI Processing Microservice"] },
@@ -261,6 +261,35 @@ export const portfolioData = {
         github: "https://github.com/ersamirsingh/coding-platform",
         liveDemo: import.meta.env.VITE_CODEX_LIVE_URL || "https://codex-fronted.onrender.com/",
         caseStudy: "CodeX DSA streamlines algorithm studies. By leveraging the Gemini API to supply personalized solution suggestions, student problem-solving speeds increased by 30%."
+      },
+      {
+        id: "quantum-cart",
+        title: "Quantum Cart",
+        tagline: "High-Performance E-Commerce Backend & Cart Microservice",
+        description: "A highly scalable e-commerce shopping cart and checkout pipeline. Resolves concurrent cart mutation race conditions, implements atomic inventory checks, and optimizes checkouts using an advanced caching layer.",
+        screenshot: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=1200&q=80",
+        tech: ["JavaScript", "Node.js", "Express.js", "MongoDB", "Redis", "Stripe API"],
+        features: [
+          "Concurrent Cart Locking: Solves read-write inventory conflicts using Redis distributed locks.",
+          "Multi-item Checkout Flow: Secure payments integrated with Stripe Webhooks.",
+          "Atomic Inventory Operations: Ensures exact stock checks under heavy traffic peaks."
+        ],
+        architecture: "React.js Client ➔ Node.js / Express Backend ➔ Redis Caching & Lock Manager ➔ MongoDB Inventory Store.",
+        responsibilities: [
+          "Built the Redis-based optimistic locking pattern for concurrent shopping cart sessions.",
+          "Integrated Stripe API checkout sessions and webhook verification handlers."
+        ],
+        challenges: "Preventing stock overselling when thousands of checkout requests hit the servers simultaneously during flash sales.",
+        solutions: "Implemented Redis transaction pipelines (MULTI/EXEC) to perform atomic inventory decrements, rolling back checkout if stock falls below zero.",
+        metrics: {
+          checkoutLatency: "75ms",
+          inventoryAccuracy: "100%",
+          concurrentRequests: "8,500/sec",
+          paymentSuccessRate: "99.8%"
+        },
+        github: "https://github.com/ersamirsingh/quantum-cart",
+        liveDemo: import.meta.env.VITE_QUANTUM_CART_LIVE_URL || "https://github.com/ersamirsingh/quantum-cart",
+        caseStudy: "Quantum Cart demonstrates how to achieve thread-safe e-commerce operations. By incorporating Redis transactions and atomic operations, concurrent cart writes were fully synchronized, preventing inventory discrepancy during peak loads."
       }
     ],
     others: [] // Cleared out since all are primary featured cards!
@@ -299,6 +328,17 @@ export const portfolioData = {
       gallery: ["https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=500&q=80"],
       presentationLink: "#",
       demoLink: "#"
+    },
+    {
+      title: "Techno Innovation Challenge (TIT College)",
+      achievement: "Hackathon Finalist",
+      problem: "Building robust collaborative networks and real-time synchronization portals for institutional engineering teams.",
+      role: "Backend System Architect",
+      tech: ["Node.js", "Express.js", "MongoDB", "Socket.io"],
+      certificateUrl: import.meta.env.VITE_CERT_TIC_TIT_URL || "https://github.com/kumarnitishbxr/TIC-Invetable",
+      gallery: ["/images/tic-tit-hackathon.jpg"],
+      presentationLink: "#",
+      demoLink: "https://github.com/kumarnitishbxr/TIC-Invetable"
     }
   ],
 
@@ -333,8 +373,8 @@ export const portfolioData = {
     stats: [
       { name: "Codolio Profile", value: "Verified Active", description: "Aggregating code ratings, solve ratios, and developer logs under @ersamirsingh" },
       { name: "LeetCode solved", value: "300+ Problems", description: "Consistently resolving medium/hard algorithmic puzzles" },
-      { name: "GeeksforGeeks", value: "300+ Problems", description: "Ranked among top coders in IES College of Technology" },
-      { name: "Academic Excellence", value: "Gold Medalist / Branch Topper", description: "Top student in Term 3 (8.59 GPA) & Term 5 (9.29 GPA) at IES College of Technology" }
+      { name: "GeeksforGeeks", value: "300+ Problems", description: "Ranked among top coders in IES College of Technology, Bhopal" },
+      { name: "Academic Excellence", value: "Gold Medalist / Branch Topper", description: "Top student in Term 3 (8.59 GPA) & Term 5 (9.29 GPA) at IES College of Technology, Bhopal" }
     ],
     startupHonors: [
       "Secured government-backed incubation grant support for OmniServe systems.",
@@ -371,7 +411,7 @@ export const portfolioData = {
       title: "IES College Award Ceremony",
       category: "College",
       image: "/images/ies-award.jpg",
-      description: "Speaking and receiving topper accolades on stage at IES College of Technology."
+      description: "Speaking and receiving topper accolades on stage at IES College of Technology, Bhopal."
     }
   ],
 
@@ -379,7 +419,7 @@ export const portfolioData = {
     {
       name: "Prof. Anupam Vyas",
       role: "Head of Department (CSE)",
-      company: "IES College of Technology",
+      company: "IES College of Technology, Bhopal",
       photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
       review: "Samir is a standout problem solver in our department. His gold medalist scores in Terms 3 and 5 are fully reflected in his systems. OmniServe showcases his ability to translate coding theory into active business tools.",
       linkedin: "https://linkedin.com/in/ersamirsingh"

@@ -4,7 +4,7 @@ import { FiGithub, FiLinkedin, FiMail, FiCode, FiDownload, FiArrowRight } from '
 import { portfolioData } from '../../data/portfolioData';
 
 export default function HeroSection({ onResumeOpen }) {
-  const { name, bio, github, linkedin, codolio, email } = portfolioData.personalInfo;
+  const { name, bio, github, linkedin, codolio, email, availability } = portfolioData.personalInfo;
   const username = github.split('/').pop() || 'samir';
   
   // Typewriter items
@@ -90,12 +90,13 @@ export default function HeroSection({ onResumeOpen }) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 w-fit mb-6"
           >
-            <span className="w-2.5 h-2 rounded-full bg-success animate-ping" />
-            <span className="text-[11px] font-mono tracking-wider uppercase text-accent font-semibold">
-              Available for immediate opportunities
-            </span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-theme-surface/50 border border-theme text-xs font-mono text-muted mb-8 select-none">
+              <span className="relative flex h-2 w-2">
+                <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              </span>
+              <span>{availability}</span>
+            </div>
           </motion.div>
 
           <motion.h1
@@ -104,7 +105,7 @@ export default function HeroSection({ onResumeOpen }) {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl tracking-tight leading-none mb-4"
           >
-            Hi, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#06b6d4] via-[#3b82f6] to-[#a855f7] animate-pulse">I'm {name}</span>
+            <span className="text-white">Hi, I'm <span className="text-[#d8b4fe] drop-shadow-[0_0_20px_rgba(216,180,254,0.6)]">{name}</span></span>
           </motion.h1>
 
           {/* Typewriter text */}

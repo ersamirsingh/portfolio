@@ -31,16 +31,16 @@ export default function DashboardSection() {
 
   const getIntensityClass = (commits) => {
     if (commits === 0) return 'bg-theme-surface/50 border border-theme/40';
-    if (commits <= 2) return 'bg-primary/20 border border-primary/10';
-    if (commits <= 5) return 'bg-primary/40 border border-primary/20';
-    if (commits <= 8) return 'bg-primary/70 border border-primary/30';
-    return 'bg-primary border border-accent/40 shadow-sm shadow-primary/30';
+    if (commits <= 2) return 'bg-purple-500/15 border border-purple-500/10';
+    if (commits <= 5) return 'bg-purple-500/35 border border-purple-500/20';
+    if (commits <= 8) return 'bg-purple-500/65 border border-purple-500/30';
+    return 'bg-purple-500 border border-purple-400/30 shadow-sm shadow-purple-500/20';
   };
 
   // Language stats for Donut Chart
   const languages = [
     { name: 'JavaScript/TS', percentage: 45, color: '#3178C6', offset: 0 },
-    { name: 'Node.js/Express', percentage: 25, color: '#339933', offset: 45 },
+    { name: 'Node.js/Express', percentage: 25, color: '#a855f7', offset: 45 },
     { name: 'React Ecosystem', percentage: 20, color: '#61DAFB', offset: 70 },
     { name: 'Databases & Python', percentage: 10, color: '#DC382D', offset: 90 }
   ];
@@ -115,7 +115,7 @@ export default function DashboardSection() {
                 {/* Live GitHub status indicator widget */}
                 <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-white/5 text-[11px] font-mono text-muted text-left">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-success animate-pulse" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse" />
                     <span className="font-bold text-body">Live GitHub Sync: Connected</span>
                   </div>
                   <div className="flex gap-4">
@@ -178,10 +178,10 @@ export default function DashboardSection() {
                     <div className="flex items-center gap-2 text-[10px] font-mono text-muted">
                       <span>Less</span>
                       <span className="w-2.5 h-2.5 rounded bg-theme-surface/50 border border-theme" />
-                      <span className="w-2.5 h-2.5 rounded bg-primary/20" />
-                      <span className="w-2.5 h-2.5 rounded bg-primary/40" />
-                      <span className="w-2.5 h-2.5 rounded bg-primary/70" />
-                      <span className="w-2.5 h-2.5 rounded bg-primary" />
+                      <span className="w-2.5 h-2.5 rounded bg-purple-500/15" />
+                      <span className="w-2.5 h-2.5 rounded bg-purple-500/35" />
+                      <span className="w-2.5 h-2.5 rounded bg-purple-500/65" />
+                      <span className="w-2.5 h-2.5 rounded bg-purple-500" />
                       <span>More</span>
                     </div>
                   </div>

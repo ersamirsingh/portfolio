@@ -40,7 +40,7 @@ export default function ContactSection() {
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
@@ -50,17 +50,99 @@ export default function ContactSection() {
 
     setIsSubmitting(true);
 
-    // Simulate API request
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    if (accessKey && accessKey !== 'YOUR_ACCESS_KEY_HERE') {
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            from_name: `${formData.name} via Portfolio`
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          setIsSubmitting(false);
+          setSubmitSuccess(true);
+          setFormData({ name: '', email: '', subject: '', message: '' });
+          return;
+        }
+      } catch (err) {
+        console.error("Web3Forms submission error:", err);
+      }
+    }
+
+    // Fallback: Mailto Redirection
+    const mailtoSubject = encodeURIComponent(formData.subject || `Portfolio Inquiry from ${formData.name}`);
+    const mailtoBody = encodeURIComponent(
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n\n` +
+      `Message:\n${formData.message}`
+    );
+    
+    window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 2000);
+    }, 1000);
   };
 
-  const handleBookingSubmit = (e) => {
+  const handleBookingSubmit = async (e) => {
     e.preventDefault();
     if (!bookingDate || !bookingTime) return;
+
+    const meetingTitle = bookingType === '30m' ? '30m Intro Chat' : '60m Technical Chat';
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    if (accessKey && accessKey !== 'YOUR_ACCESS_KEY_HERE') {
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: `Calendar Booking Request: ${meetingTitle}`,
+            name: "Calendar Scheduler",
+            email: "scheduler@singh.com",
+            message: `A visitor has requested a meeting slot:\n\nType: ${meetingTitle}\nDate: ${bookingDate}\nTime: ${bookingTime}`,
+            from_name: "Portfolio Scheduler"
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          setBookingSuccess(true);
+          return;
+        }
+      } catch (err) {
+        console.error("Booking Web3Forms error:", err);
+      }
+    }
+
+    // Fallback: Mailto Redirection
+    const mailtoSubject = encodeURIComponent(`Meeting Booking Request: ${meetingTitle}`);
+    const mailtoBody = encodeURIComponent(
+      `Hello Samir,\n\nI would like to schedule a call with you:\n` +
+      `Meeting Type: ${meetingTitle}\n` +
+      `Date: ${bookingDate}\n` +
+      `Time: ${bookingTime}\n\n` +
+      `Please let me know if this works for you!`
+    );
+    
+    window.location.href = `mailto:${email}?subject=${mailtoSubject}&body=${mailtoBody}`;
     setBookingSuccess(true);
   };
 
